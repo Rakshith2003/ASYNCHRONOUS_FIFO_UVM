@@ -61,4 +61,3 @@ module top;
     #10000 $finish;
   end
 endmodule
-
