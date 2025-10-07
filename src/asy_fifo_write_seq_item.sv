@@ -20,4 +20,3 @@ class asy_fifo_write_sequence_item extends uvm_sequence_item;
   
 endclass
 
-
