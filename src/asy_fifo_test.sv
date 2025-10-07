@@ -140,4 +140,3 @@ class asy_fifo_test extends asy_fifo_base; //1
 endclass
 
 
-
