@@ -9,4 +9,3 @@ class asy_fifo_write_sequencer extends uvm_sequencer#(asy_fifo_write_sequence_it
   
 endclass
 
-
