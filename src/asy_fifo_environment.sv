@@ -5,7 +5,7 @@ class asy_fifo_environment extends uvm_env;
   asy_fifo_read_agent read_agt;
   asy_fifo_write_agent write_agt;
   asy_fifo_scoreboard scb;
-  //asy_fifo_subscriber cov;
+  asy_fifo_subscriber cov;
   
   virtual_sequencer v_seqr;
   
@@ -18,16 +18,16 @@ class asy_fifo_environment extends uvm_env;
     read_agt = asy_fifo_read_agent::type_id::create("read_agt",this);
     write_agt = asy_fifo_write_agent::type_id::create("write_agt",this);
     scb    = asy_fifo_scoreboard::type_id::create("scb",this);
-    //cov    = asy_fifo_subscriber::type_id::create("cov",this);
+    cov    = asy_fifo_subscriber::type_id::create("cov",this);
     v_seqr = virtual_sequencer::type_id::create("v_seqr",this);
   endfunction
   
   virtual function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
     write_agt.write_mon.wr_mon_port.connect(scb.write_export);
-    //write_agt.write_mon.wr_mon_port.connect(cov.wr_cov_port);
+    write_agt.write_mon.wr_mon_port.connect(cov.w_cov_port);
     read_agt.read_mon.rd_mon_port.connect(scb.read_export);
-    //read_agt.read_mon.read_mon_port.connect(cov.rd_cov_port);
+    read_agt.read_mon.rd_mon_port.connect(cov.r_cov_port);
     
     v_seqr.wr_seqr = write_agt.write_seqr;
     v_seqr.rd_seqr = read_agt.read_seqr;

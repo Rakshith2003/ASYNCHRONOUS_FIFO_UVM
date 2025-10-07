@@ -94,28 +94,28 @@ class asy_rd_empty_test3 extends asy_fifo_base; //1
   
 endclass
 
-class asy_wr_rd_0_test4 extends asy_fifo_base; //1
+// class asy_wr_rd_0_test4 extends asy_fifo_base; //1
   
   
-  `uvm_component_utils(asy_wr_rd_0_test4)
-  function new(string name="asy_wr_rd_0_test4",uvm_component parent);
-    super.new(name,parent);
-  endfunction
+//   `uvm_component_utils(asy_wr_rd_0_test4)
+//   function new(string name="asy_wr_rd_0_test4",uvm_component parent);
+//     super.new(name,parent);
+//   endfunction
   
-  virtual task run_phase(uvm_phase phase);
-    asy_fifo_wr_seq4 seq1;
-    asy_fifo_rd_seq4 seq2;
-    phase.raise_objection(this);
-    seq1 = asy_fifo_wr_seq4::type_id::create("seq1");
-    seq2 = asy_fifo_rd_seq4::type_id::create("seq2");
-    repeat(10)begin
-      seq1.start(env.write_agt.write_seqr);
-      seq2.start(env.read_agt.read_seqr);
-     end
-    phase.drop_objection(this);
-  endtask
+//   virtual task run_phase(uvm_phase phase);
+//     asy_fifo_wr_seq4 seq1;
+//     asy_fifo_rd_seq4 seq2;
+//     phase.raise_objection(this);
+//     seq1 = asy_fifo_wr_seq4::type_id::create("seq1");
+//     seq2 = asy_fifo_rd_seq4::type_id::create("seq2");
+//     repeat(10)begin
+//       seq1.start(env.write_agt.write_seqr);
+//       seq2.start(env.read_agt.read_seqr);
+//      end
+//     phase.drop_objection(this);
+//   endtask
   
-endclass
+// endclass
 
 
 class asy_fifo_test extends asy_fifo_base; //1

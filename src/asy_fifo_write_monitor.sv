@@ -30,7 +30,7 @@ class asy_fifo_write_monitor extends uvm_monitor;
       wr_mon_port.write(req);
       `uvm_info("WRITE_MONITOR",$sformatf("[WRITE MONITOR T=%t] Captured data from dut and sent to scoreboard | winc=%d | wdata=%d | wfull=%d ",$time,req.winc,req.wdata,req.wfull),UVM_LOW);
      
-      repeat(1)@(posedge vif.wr_mon_cb);
+      //repeat(1)@(posedge vif.wr_mon_cb);
     end
   endtask
 endclass

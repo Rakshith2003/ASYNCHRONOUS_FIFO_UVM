@@ -30,7 +30,7 @@ class asy_fifo_read_monitor extends uvm_monitor;
       rd_mon_port.write(req);
       `uvm_info("READ_MONITOR",$sformatf("[READ MONITOR T=%t] Captured data from dut and sent to scoreboard | rinc=%d | rdata=%d | rempty=%d ",$time,req.rinc,req.rdata,req.rempty),UVM_LOW);
       
-      repeat(1)@(posedge vif.rd_mon_cb);
+      //repeat(1)@(posedge vif.rd_mon_cb);
     end
   endtask
 endclass
