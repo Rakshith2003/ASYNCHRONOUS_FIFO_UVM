@@ -33,26 +33,26 @@ class asy_fifo_scoreboard extends uvm_scoreboard;
   endfunction
 
   function void write_write(asy_fifo_write_sequence_item t);
-    if (!vif.wrst_n) begin
+   if (!vif.wrst_n) begin //rst check
       `uvm_info(get_type_name(), "RESET ACTIVE during write", UVM_LOW)
       // Compare expected write values during reset
-      if (t.wfull == 0) begin
+    if (t.wfull == 0) begin  //if full
         `uvm_info(get_type_name(), $sformatf("Write Reset TEST PASSED @ %0t", $time), UVM_LOW)
         pass_count++;
-      end else begin
+      end else begin  //if not
         `uvm_error(get_type_name(), $sformatf("Write Reset TEST FAILED @ %0t", $time))
         fail_count++;
       end
       return;
     end
 
-    if (t.winc) begin
-      if (!t.wfull) begin
+   if (t.winc) begin   //trying to write
+    if (!t.wfull) begin   //if not full write into que 
         scb_q.push_back(t.wdata);
         `uvm_info(get_type_name(),
           $sformatf("WRITE @%0t -> PUSHED: %0d (Queue size=%0d)",
                     $time, t.wdata, scb_q.size()), UVM_MEDIUM)
-      end else begin
+      end else begin  //if  not ignore it 
         `uvm_info(get_type_name(),
           $sformatf("FULL @%0t -> Write attempt ignored (data=%0d)",
                     $time, t.wdata), UVM_MEDIUM)
@@ -60,8 +60,8 @@ class asy_fifo_scoreboard extends uvm_scoreboard;
     end
   endfunction
 
-  function void write_read(asy_fifo_read_sequence_item t);
-    if (!vif.rrst_n) begin
+ function void write_read(asy_fifo_read_sequence_item t);   //read method
+  if (!vif.rrst_n) begin  //rst check
       `uvm_info(get_type_name(), "RESET ACTIVE during read", UVM_LOW)
     
       if (t.rempty && t.rdata == 0) begin
@@ -74,16 +74,16 @@ class asy_fifo_scoreboard extends uvm_scoreboard;
       return;
     end
 
-    if (t.rinc) begin
+  if (t.rinc) begin    //triying to read
       
-      if (t.rempty && scb_q.size() == 0) begin
+   if (t.rempty && scb_q.size() == 0) begin    //if empty ,empty check 
         `uvm_info(get_type_name(),
           $sformatf("EMPTY @%0t: DUT correctly reported EMPTY.", $time),
           UVM_MEDIUM)
         return;
       end
 
-      if (t.rempty && scb_q.size() != 0) begin
+   if (t.rempty && scb_q.size() != 0) begin  
         `uvm_error(get_type_name(),
           "DUT PROTOCOL ERROR: rempty=1 but scoreboard queue not empty!")
         return;
@@ -94,7 +94,7 @@ class asy_fifo_scoreboard extends uvm_scoreboard;
       end
 
      
-      if (!t.rempty && scb_q.size() > 0) begin
+   if (!t.rempty && scb_q.size() > 0) begin   //if data is present not empty then read the data
         expected_data = scb_q.pop_front();
         if (t.rdata === expected_data) begin
           match_count++;
